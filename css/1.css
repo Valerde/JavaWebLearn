@@ -1,0 +1,15 @@
+div{
+    border: green 1px solid;
+    color: blue;
+    font-size: 12px;
+}
+span{
+    border: blue 5px dashed;
+    color: red;
+    font-size: 30px;
+}
+/*标签名选择器的格式是
+    标签名{
+        属性:值;
+    }
+*/

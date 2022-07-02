@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单的显示</title>
+</head>
+<body>
+<!--form标签是表单标签
+        action属性设置提进的服务器地址
+        method属性设置提交的方式是GET(默认)还是POST
+
+        表单提交的时候,数据没有发送到服务器的三种情况
+            1.表单项没有value
+            2.单选,复选(下拉列表中的option)都需要设置value值
+            3.表单项不在form标签中
+        -->
+
+<!--
+        GET的特点:
+            1.浏览器中地址拦的地址是:action[+?+请求参数]
+                请求参数的格式是name+=value&name=value
+            2.不安全
+            3.有长度的限制,最长100个字符
+            例如
+
+            http://127.0.0.1:8080/      服务器地址
+            ?                           分隔符
+            sex=on&abc=abcValue         请求参数(表单的信息)如果是用的get方法,为每个控件设置name才会在请求参数显示
+        POST的特点:
+        1.浏览器中只有action属性值
+        2.相对于GET请求更安全
+        3.理论上没有数据长度的限制-->
+
+<form action="http://127.0.0.1:8080" method="post">
+    <input type="hidden" name="action" value="login">
+    <table align="center">
+        <h1 align="center">用户注册</h1>
+        <tr>
+            <td>用户名称:</td>
+            <td><input type="text" value="默认值" name="username"></td>
+        </tr>
+        <tr>
+            <td>用户密码: </td>
+            <td><input type="password" maxlength="8" name="password1"></td>
+        </tr><tr>
+        <td>确认密码:</td>
+        <td> <input type="password" maxlength="8" name="password2"></td>
+    </tr>
+        <tr>
+            <td>性别:</td>
+            <td><input type="radio" name="sex" value="boy"/>男
+                <input type="radio" name="sex" checked="checked" value="girl"/>女</td>
+        </tr>
+        <tr>
+            <td>兴趣爱好:</td>
+            <td><input name="hobby" value="Java" type="checkbox"> Java
+                <input name="hobby" value="js" type="checkbox" > JavaScript<br>
+                <input name="hobby" value="C++" type="checkbox"> C++
+                <input name="hobby" value="py" type="checkbox" checked="checked"> Python
+            </td>
+        </tr>
+        <tr>
+            <td>国籍:</td>
+            <td><select name="country">
+                <option value="default">请选择国籍</option>
+                <option value="cn" selected="selected">中国</option>
+                <option value="usa">美国</option>
+                <option value="jp">小日本</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td>自我评价:</td>
+            <td><textarea name="pkjx" rows="10" cols="20">这样设置默认值</textarea></td>
+        </tr><tr>
+        <td><input name="reset" type="reset" value="重新设置"></td>
+        <td><input name="submit" type="submit" value="提交"></td>
+    </tr>
+<!--<tr>-->
+<!--        <td><input  type="button" value="abc"></td>-->
+<!--        <td><input type="file"></td>-->
+<!--    </tr>-->
+    </table>
+
+
+    <!--http://127.0.0.1:8080/
+    ?
+    username=sgnfgnx
+    &password1=123
+    &password2=435
+    &sex=girl
+    &hobby=js
+    &hobby=py
+    &country=cn
+    &pkjx=%E8%BF%99%E6%A0%B7%E8%AE%BE%E7%BD%AE%E9%BB%98afb%E8%AE%A4%E5%80%BC
+    &submit=%E6%8F%90%E4%BA%A4
+    &action=abcValue-->
+
+</form>
+</body>
+</html>
