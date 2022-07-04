@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function fun() {
+            alert(arguments.length);//3
+            alert(arguments[0]);//1
+            alert(arguments[1]);//as
+            alert(arguments[2]);//true
+            alert(arguments[3]);//undefined
+            alert("无参函数fun()");
+            alert(arguments.length);//3
+        }
+
+        // fun(1,"as",true);
+
+        function sum(num1, num2) {
+            var result;//如果此时不对result赋值,那么,就会输出NAN
+            result = "";//
+            for (var i = 0; i < arguments.length; i++) {
+                if (typeof (arguments[i]) == "string") {
+                    result += arguments[i];
+                }//如果此时不对typeof进行判断,就是简单的字符串拼接
+            }
+            return result;
+        }
+
+        alert(sum(1, 2, 3, 4, "abc", 5, 6, "de", 7, 8, 9,true));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

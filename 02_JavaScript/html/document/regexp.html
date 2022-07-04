@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        //表示字符串中是否包含字母e
+        // let patt = new RegExp("e");
+        let patt = /e/;//也是正则表达式对象
+        // alert(patt);
+
+        //查找方括号之间的任何字符
+        patt = /[abc]/;
+        //表示要求字符串是否包含任意小写字母
+        patt = /[a-z]/;
+        //表示要求字符串中是否包含任意的大写字母
+        patt = /[A-Z]/;
+        //要求表示字符串,是否包含字母,数字,下划线_
+        patt = /\w/;
+        //表示要求字符串中是否包含至少一个a
+        patt = /a+/;
+        //表示要求字符串中是否包含零个或者多个a
+        patt = /a*/;
+        //表示要求字符串是否包含一个或零个a
+        patt = /a?/;
+        //表示要求 字符串中是否包含连续三个a
+        patt = /a{3}/;
+        //表示要求 字符串是否包含至少三个连续的a,至多五个连续的a
+        patt = /a{3,5}/;//"2daaaaaavasv"还是true,因为它有包含了
+        //表示是否包含至少3个连续a
+        patt = /a{3,}/;
+        //表示要求字符串必须以a结尾
+        patt = /a$/;
+        //表示要求字符串必须以a开头
+        patt = /^a/;
+        //  /a{3,5}/  如果要求从头到尾匹配
+        patt = /^a{3,5}$/;//aaa,aaaa,aaaaa才匹配
+        //要求从头到尾都是字母,下划线,数字,且长度介于5到12之间
+        patt = /^\w{5,12}$/;//如果去掉^和$,那么"advbaa[["就true了
+        alert(patt.test("advbaa[["));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

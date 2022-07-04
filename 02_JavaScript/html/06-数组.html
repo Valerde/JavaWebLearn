@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        let arr0 = [1 , "abc" , true]; // 定义数组同时赋值元素
+        let arr = [];//定义一个空数组
+        alert(arr.length);//0
+        arr[0] = 12;
+        alert(arr[0]);
+        alert(arr.length);//1
+        arr[2] = "abc";
+        alert(arr[2]);//数组第一个位置和第二个位置有元素
+        alert(arr.length);//数组的长度就是三
+        alert(arr[1]);//undefined
+
+
+        for (let i = 0;i<arr.length;i++){
+            alert(arr[i]);//依次输出12,undefined,abc
+        }
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

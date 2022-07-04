@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        // function fun() {
+        //     alert("无参构造");
+        // }
+        //
+        // fun();
+        //
+        // function fun(a) {
+        //     alert(a);
+        // }
+        //
+        // fun("有参构造");
+        // fun();
+
+        //三次调用,分别输出undefined,有参构造,undefined
+        //调换顺序
+        function fun(a) {
+            alert(a);
+        }
+
+        fun();
+
+        function fun() {
+            alert("无参构造");
+        }
+
+        fun("有参构造");
+        fun();
+        //三次调用均输出"无参构造"
+    </script>
+</head>
+<body>
+
+</body>
+</html>
