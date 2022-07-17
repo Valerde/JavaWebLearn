@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!--    别名-->
+    <typeAliases>
+        <package name="com.sovava.pojo"/>
+    </typeAliases>
+
+
+    <environments default="development">
+<!--        enviroment:配置数据路连接信息.可以配置多个enviroment,通过default切换不同的enviroment-->
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+<!--                数据库链接信息-->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="ykn12345"/>
+            </dataSource>
+        </environment>
+
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--                数据库链接信息-->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="ykn12345"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+<!--        加载SQL的映射文件-->
+<!--        <mapper resource="com/sovava/mapper/userMapper.xml"/>-->
+        
+<!--        Mapper代理方式-->
+        <package name="com.sovava.mapper"/>
+    </mappers>
+</configuration>

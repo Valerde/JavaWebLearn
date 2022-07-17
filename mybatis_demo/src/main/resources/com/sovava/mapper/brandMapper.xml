@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace命名空间-->
+<mapper namespace="com.sovava.mapper.BrandMapper">
+
+    <!-- 数据库表的字段名称  和  实体类属性的名称不一样,则不能自动封装数据
+            * 起别名 select id,brand_name as brandName  对不一样的列名起别名,让别名和和实体类属性名一样
+                * 缺点:每次查询都要定义一次别名
+                    解决:sql片断  缺点,不灵活
+            * resultMap   更为通用
+                1. 定义resultMap标签
+                2. 在<select>标签中,使用resultMap属性替换resultType属性
+
+    -->
+
+    <!--    
+        sql片断
+    -->
+    <!--    <sql id="brand_column">-->
+    <!--        id,brand_name as brandName,company_name as companyName,orderd,description,status-->
+    <!--    </sql>-->
+    <!--    select <include refid="brand_column"/> from tb_brand;-->
+
+    <!--    id:唯一标志
+            type:映射的类型,支持别名-->
+    <resultMap id="brandResultMap" type="Brand"> <!--别名在mybatis-config中配置 -->
+        <!--    id:完成主键字段的映射
+                    column:表的列名
+                    property:实体类的属性名
+                result:完成一般字段的映射-->
+        <!--        <id column="id" property="id"/>-->
+        <result column="brand_name" property="brandName"/>
+        <result column="company_name" property="companyName"/>
+    </resultMap>
+
+
+    <!--    <select id="selectAll" resultType="com.sovava.pojo.Brand">-->
+    <select id="selectAll" resultMap="brandResultMap">
+        select *
+        from tb_brand
+    </select>
+
+    <!--
+        * 参数占位符
+            * #{}  会将其替换成?,为了防止SQL注入
+            * ${}  拼SQL,不会替换成? ,会存在SQL注入
+            使用时机:
+                参数传递的时候:#{}
+                表明或列名不固定的时候:${}会存在SQL注入的问题
+
+        * 参数类型:parameterType:可以省略
+        * 特殊字符的处理:
+            1. 转义字符:< 转为  &lt;
+            2. CDATA区  输入CD  tab补全   是和转义字符多的情况
+            -->
+    <select id="selectByIdBrand" resultMap="brandResultMap">
+        select *
+        from tb_brand
+        where id
+         <![CDATA[
+         <
+         ]]>
+         #{id};
+    </select>
+    <!--    条件查询-->
+    <!--    <select id="selectByCondition" resultMap="brandResultMap">-->
+    <!--        select *-->
+    <!--        from tb_brand-->
+    <!--        where status = #{status}-->
+    <!--          and brand_name like #{brandName}-->
+    <!--          and company_name like #{companyName};-->
+    <!--    </select>-->
+
+
+    <!--    动态SQL,即如果用户选择没有选全
+            1. 用if <if test="status != null">status = #{status}</if>
+                问题:如果第一个条件不存在,那么where 直接连接的就是and brand_name
+                    解决方案:1. 在所有条件前都加and,然后在前面加一个恒等式
+                            2. 把where用<>包起来,然后在所有条件前面加and,mybatis就会自动把不需要的and去掉-->
+    <select id="selectByCondition" resultMap="brandResultMap">
+        select *
+        from tb_brand
+        <where>
+            <if test="status != null">and status = #{status}</if>
+            <if test="brandName != null and brandName != '' ">and brand_name like #{brandName}</if>
+            <if test="companyName != null and companyName != '' ">and company_name like #{companyName}</if>
+
+        </where>
+
+    </select>
+
+    <!--    单条件查询-->
+    <select id="selectByConditionSingle" resultMap="brandResultMap">
+        select *
+        from tb_brand
+        <where>
+            <choose><!-- 相当于switch-->
+                <when test="status != null">status = #{status}</when><!-- 相当于case-->
+                <when test="brandName != null and brandName != '' ">brand_name like #{brandName}</when><!-- 相当于case-->
+                <when test="companyName != null and companyName != '' ">company_name like #{companyName}
+                </when><!-- 相当于case-->
+                <!--            <otherwise>1=1</otherwise>&lt;!&ndash;  相当于default,但是是查询所有,如果把where直接用<>包裹起来,就不用otherwise了  &ndash;&gt;-->
+            </choose>
+        </where>
+        ;
+    </select>
+    <!--        添加-->
+
+    <!--    <insert id="add">-->
+    <!--        insert into tb_brand (brand_name, company_name, ordered, description, status)-->
+    <!--        values (#{brandName},#{companyName},#{ordered},#{description},#{status});-->
+    <!--    </insert>-->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id"><!--添加的时候设置主键返回,id应该对应Brand实体类中的东西-->
+        insert into tb_brand (brand_name, company_name, ordered, description, status)
+        values (#{brandName}, #{companyName}, #{ordered}, #{description}, #{status});
+    </insert>
+
+    <!--    修改所有-->
+    <!--    <update id="update">-->
+    <!--        update tb_brand-->
+    <!--        set status       = #{status},-->
+    <!--            company_name = #{companyName},-->
+    <!--            brand_name   = #{brandName},-->
+    <!--            ordered      = #{ordered},-->
+    <!--            description  = #{description}-->
+    <!--        where id = #{id};-->
+    <!--    </update>-->
+
+    <!--    修改某一项数据-->
+    <update id="update">
+        update tb_brand
+        <set><!--在test中应该是代码实体类中的属性名,而不是数据库中的属性名-->
+            <if test="status != null">status = #{status},</if>
+            <if test="companyName != null and companyName != '' ">company_name = #{companyName},</if>
+            <if test="brandName != null and brandName != '' ">brand_name = #{brandName},</if>
+            <if test="ordered != null">ordered = #{ordered},</if>
+            <if test="description != null and description != '' ">description = #{description}</if>
+        </set>
+        where id = #{id};
+    </update>
+
+
+    <delete id="deleteById">
+        delete
+        from tb_brand
+        where id = #{id};
+    </delete>
+    <!--    mybatis 会吧数组参数封装成一个Map集合
+                * 默认:array = 数组
+                * 使用@Param占位符,就可以使用传入的数组名了-->
+    <delete id="deleteByIds">
+        delete
+        from tb_brand
+        where id
+        in(
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        );
+    </delete>
+</mapper>
