@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Scanner;
+
+
 /**
  * Description: TODO
  *
@@ -18,6 +21,8 @@ public class slf4jTest {
     public void test(){
 //        while (true)
             this.logger.debug(String.valueOf(Math.random()));
+
+
     }
 
 
